@@ -10,6 +10,6 @@ This project is a practice e-commerce app to help sharpen skills
 - Styled components
 - Typescript
 - Firebase
-- Continual integration with Netlify
+- CI/CD with Netlify
 - Redux Sagas
 - Graph QL & Apollo
