@@ -4,7 +4,7 @@ This project is a practice e-commerce app to help sharpen skills
 
 ## Technologies and features
 
-- Testing
+- Unit Testing
 - Stripe integration
 - Lambda functions
 - Styled components
