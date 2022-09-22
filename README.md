@@ -13,3 +13,4 @@ This project is a practice e-commerce app to help sharpen skills
 - CI/CD with Netlify
 - Redux Sagas
 - Graph QL & Apollo
+- Styled Components

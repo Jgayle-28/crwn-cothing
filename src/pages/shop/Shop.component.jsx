@@ -1,3 +1,5 @@
+import "./shop.styles.scss"
+
 function Shop() {
   return (
     <div>
