@@ -5,9 +5,11 @@ import {
   createUserDocumentFromAuth,
   // signInWithGoogleRedirect,
 } from "../../utils/firebase/firebase.utils"
-import SignUpForm from "../../components/forms/auth/SignUpForm.component"
+import SignInForm from "../../components/forms/auth/sign-in/SignInForm.component"
+import SignUpForm from "../../components/forms/auth/sign-up/SignUpForm.component"
+import "./auth-page.styles.scss"
 
-function SignIn() {
+function Auth() {
   // Needed to catch the information from the redirect -> sign in with google redirect
   // useEffect(() => {
   //   handleLogInWithGoogleRedirect()
@@ -28,7 +30,7 @@ function SignIn() {
     <div>
       <h1>SignIn</h1>
       <button onClick={handleLogInWIthGoogle}>Sign in with Google</button>
-
+      <SignInForm />
       <SignUpForm />
       {/* DEMO BUTTON FOR SIGN IN WITH GOOGLE REDIRECT */}
       {/* <button onClick={signInWithGoogleRedirect}>
@@ -38,4 +40,4 @@ function SignIn() {
   )
 }
 
-export default SignIn
+export default Auth

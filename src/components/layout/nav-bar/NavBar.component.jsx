@@ -14,7 +14,7 @@ function NavBar() {
           <Link to='/shop' className='nav-link'>
             SHOP
           </Link>
-          <Link to='/shop' className='nav-link'>
+          <Link to='/contact' className='nav-link'>
             CONTACT
           </Link>
           <Link to='/sign-in' className='nav-link'>

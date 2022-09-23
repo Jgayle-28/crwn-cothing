@@ -2,9 +2,8 @@ import { useState } from "react"
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-} from "../../../utils/firebase/firebase.utils"
-import Button from "../../theme/Button/Button.component"
-import FormInput from "../../theme/FormInput/FormInput.component"
+} from "../../../../utils/firebase/firebase.utils"
+import { Button, FormInput } from "../../../theme"
 import "./sign-up-form.styles.scss"
 
 const defaultFormData = {

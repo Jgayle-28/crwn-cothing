@@ -1,6 +1,8 @@
 # Crown Clothing
 
-This project is a practice e-commerce app to help sharpen skills
+## The Why
+
+This project is a practice e-commerce app to help sharpen skills, try new strategies and naming conventions for file structure and components
 
 ## Technologies and features
 
