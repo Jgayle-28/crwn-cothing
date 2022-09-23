@@ -2,9 +2,8 @@ import { useState, useContext } from "react"
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-} from "../../../../utils/firebase/firebase.utils"
-import { Button, FormInput } from "../../../theme"
-import { AuthContext } from "../../../../context/auth/Auth.context"
+} from "utils/firebase/firebase.utils"
+import { Button, FormInput } from "components/theme"
 import "../auth-form.styles.scss"
 
 const defaultFormData = {
@@ -17,8 +16,6 @@ const defaultFormData = {
 function SignUpForm() {
   const [formData, setFormData] = useState(defaultFormData)
   const { displayName, email, password, confirmPassword } = formData
-
-  const { setCurrentUser } = useContext(AuthContext)
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -36,8 +33,6 @@ function SignUpForm() {
         // Add the users display name since it is not coming from Google
         res.user.displayName = displayName
         await createUserDocumentFromAuth(res.user)
-        // Set user in context
-        setCurrentUser(res.user)
         setFormData(defaultFormData)
       }
     } catch (error) {
