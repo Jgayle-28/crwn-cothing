@@ -1,10 +1,10 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-  signInWithGooglePopup,
 } from "../../../../utils/firebase/firebase.utils"
 import { Button, FormInput } from "../../../theme"
+import { AuthContext } from "../../../../context/auth/Auth.context"
 import "../auth-form.styles.scss"
 
 const defaultFormData = {
@@ -17,6 +17,8 @@ const defaultFormData = {
 function SignUpForm() {
   const [formData, setFormData] = useState(defaultFormData)
   const { displayName, email, password, confirmPassword } = formData
+
+  const { setCurrentUser } = useContext(AuthContext)
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -33,17 +35,14 @@ function SignUpForm() {
       if (res) {
         // Add the users display name since it is not coming from Google
         res.user.displayName = displayName
-        const userDocRef = await createUserDocumentFromAuth(res.user)
+        await createUserDocumentFromAuth(res.user)
+        // Set user in context
+        setCurrentUser(res.user)
         setFormData(defaultFormData)
       }
     } catch (error) {
       console.log("error", error)
     }
-  }
-
-  const handleLogInWIthGoogle = async () => {
-    const res = await signInWithGooglePopup()
-    const userDocRef = await createUserDocumentFromAuth(res.user)
   }
 
   return (
