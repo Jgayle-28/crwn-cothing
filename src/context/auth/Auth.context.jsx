@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect } from "react"
-import { onAuthStateChangedListener } from "utils/firebase/firebase.utils"
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from "utils/firebase/firebase.utils"
 
 // Context state
 export const AuthContext = createContext({
@@ -10,9 +13,13 @@ export const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null)
 
+  // onAuthStateChanged from firebase allows us to only update when the 'auth' singleton has changed thus preventing unnecessary re renders
+  // Which in return enhances performance and centralizes authentication actions "REGISTER & SIGN IN"
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
-      console.log("weee", user)
+      // If a user is coming back "NOT SIGNING OUT"
+      if (user) createUserDocumentFromAuth(user)
+      setCurrentUser(user)
     })
     return unsubscribe
   }, [])
