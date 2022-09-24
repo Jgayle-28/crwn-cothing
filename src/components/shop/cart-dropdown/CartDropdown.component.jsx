@@ -4,9 +4,11 @@ import { Button } from "components/theme"
 import "./cart-dropdown.styles.scss"
 import "./cart-icon.styles.scss"
 import { ShopContext } from "context/shop/Shop.context"
+import CartDropdownItem from "../cart-dropdown-item/CartDropdownItem"
 
 function CartDropdown() {
-  const { cartMenuOpen, setCartMenuOpen } = useContext(ShopContext)
+  const { cartItems, cartCount, cartMenuOpen, setCartMenuOpen } =
+    useContext(ShopContext)
 
   return (
     <>
@@ -15,11 +17,15 @@ function CartDropdown() {
         onClick={() => setCartMenuOpen(!cartMenuOpen)}
       >
         <BagIcon className='shopping-icon' />
-        <span className='item-count'>0</span>
+        <span className='item-count'>{cartCount}</span>
       </div>
       {cartMenuOpen && (
         <div className='cart-dropdown-container'>
-          <div className='cart-items'></div>
+          <div className='cart-items'>
+            {cartItems.map((item) => (
+              <CartDropdownItem key={item.id} cartIem={item} />
+            ))}
+          </div>
           <Button>GO TO CHECKOUT</Button>
         </div>
       )}
