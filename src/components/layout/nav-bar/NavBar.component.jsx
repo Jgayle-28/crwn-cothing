@@ -4,6 +4,7 @@ import { ReactComponent as CrownLogo } from "assets/crown.svg"
 import { AuthContext } from "context/auth/Auth.context"
 import { signOutUser } from "utils/firebase/firebase.utils"
 import "./nav-bar.styles.scss"
+import CartDropdown from "components/shop/cart-dropdown/CartDropdown.component"
 
 function NavBar() {
   const { currentUser } = useContext(AuthContext)
@@ -31,6 +32,7 @@ function NavBar() {
               SIGN IN
             </Link>
           )}
+          <CartDropdown />
         </div>
       </nav>
       <Outlet />

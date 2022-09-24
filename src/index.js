@@ -1,17 +1,22 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import "./index.scss"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
+// Providers
 import { AuthProvider } from "./context/auth/Auth.context"
+import { ShopProvider } from "./context/shop/Shop.context"
+// styles
+import "./index.scss"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <ShopProvider>
+          <App />
+        </ShopProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
