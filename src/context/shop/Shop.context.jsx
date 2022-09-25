@@ -1,5 +1,9 @@
 import { createContext, useEffect, useState } from "react"
-import { addCartItem } from "utils/shop/shop.utils"
+import {
+  addCartItem,
+  removeCartItem,
+  deleteCartItem,
+} from "utils/shop/shop.utils"
 import SHOP_DATA from "shopData"
 
 export const ShopContext = createContext({
@@ -7,8 +11,11 @@ export const ShopContext = createContext({
   cartMenuOpen: false,
   cartItems: [],
   cartCount: 0,
+  cartTotal: 0,
   setProducts: () => {},
   addItemToCart: () => {},
+  removeItemFromCart: () => {},
+  deleteItemFromCart: () => {},
   setCartMenuOpen: () => {},
 })
 
@@ -17,6 +24,7 @@ export const ShopProvider = ({ children }) => {
   const [cartMenuOpen, setCartMenuOpen] = useState(false)
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
+  const [cartTotal, setCartTotal] = useState(0)
 
   useEffect(() => {
     const newCartItems = cartItems.reduce(
@@ -26,8 +34,26 @@ export const ShopProvider = ({ children }) => {
     setCartCount(newCartItems)
   }, [cartItems])
 
+  useEffect(() => {
+    const newCartTotal = cartItems.reduce(
+      (total, cartIem) => total + cartIem.quantity * cartIem.price,
+      0
+    )
+    setCartTotal(newCartTotal)
+  }, [cartItems])
+
   const addItemToCart = (product) => {
     const newCartItems = addCartItem(cartItems, product)
+    setCartItems(newCartItems)
+  }
+
+  const removeItemFromCart = (product) => {
+    const newCartItems = removeCartItem(cartItems, product)
+    setCartItems(newCartItems)
+  }
+
+  const deleteItemFromCart = (product) => {
+    const newCartItems = deleteCartItem(cartItems, product)
     setCartItems(newCartItems)
   }
 
@@ -37,9 +63,12 @@ export const ShopProvider = ({ children }) => {
     cartItems,
     cartMenuOpen,
     cartCount,
+    cartTotal,
     // setters
     setProducts,
     addItemToCart,
+    removeItemFromCart,
+    deleteItemFromCart,
     setCartMenuOpen,
   }
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>

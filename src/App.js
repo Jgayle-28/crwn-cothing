@@ -6,6 +6,7 @@ import Home from "./pages/home/Home.page"
 import Shop from "./pages/shop/Shop.page"
 import Contact from "./pages/contact/Contact.page"
 import Auth from "./pages/auth/Auth.page"
+import Checkout from "pages/checkout/Checkout.page"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='shop' element={<Shop />} />
           <Route path='contact' element={<Contact />} />
           <Route path='sign-in' element={<Auth />} />
+          <Route path='checkout' element={<Checkout />} />
         </Route>
       </Routes>
     </>
