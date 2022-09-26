@@ -7,7 +7,7 @@ import {
 import { getCategoriesAndDocuments } from "utils/firebase/firebase.utils"
 
 export const ShopContext = createContext({
-  products: null,
+  products: {},
   cartMenuOpen: false,
   cartItems: [],
   cartCount: 0,
@@ -20,7 +20,7 @@ export const ShopContext = createContext({
 })
 
 export const ShopProvider = ({ children }) => {
-  const [products, setProducts] = useState(null)
+  const [products, setProducts] = useState({})
   const [cartMenuOpen, setCartMenuOpen] = useState(false)
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
@@ -29,7 +29,7 @@ export const ShopProvider = ({ children }) => {
   useEffect(() => {
     const getCategories = async () => {
       const categories = await getCategoriesAndDocuments()
-      console.log("categories :>> ", categories)
+      setProducts(categories)
     }
     getCategories()
   }, [])
