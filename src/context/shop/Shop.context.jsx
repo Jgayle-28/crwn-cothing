@@ -4,7 +4,7 @@ import {
   removeCartItem,
   deleteCartItem,
 } from "utils/shop/shop.utils"
-import SHOP_DATA from "shopData"
+import { getCategoriesAndDocuments } from "utils/firebase/firebase.utils"
 
 export const ShopContext = createContext({
   products: null,
@@ -20,11 +20,19 @@ export const ShopContext = createContext({
 })
 
 export const ShopProvider = ({ children }) => {
-  const [products, setProducts] = useState(SHOP_DATA)
+  const [products, setProducts] = useState(null)
   const [cartMenuOpen, setCartMenuOpen] = useState(false)
   const [cartItems, setCartItems] = useState([])
   const [cartCount, setCartCount] = useState(0)
   const [cartTotal, setCartTotal] = useState(0)
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const categories = await getCategoriesAndDocuments()
+      console.log("categories :>> ", categories)
+    }
+    getCategories()
+  }, [])
 
   useEffect(() => {
     const newCartItems = cartItems.reduce(
