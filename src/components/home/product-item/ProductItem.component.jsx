@@ -1,15 +1,15 @@
-import "./category-item.styles.scss"
+import "./product-item.styles.scss"
 
-function index({ category }) {
+function ProductItem({ category }) {
   const { title, imageUrl } = category
   return (
     <>
-      <div className='category-container'>
+      <div className='product-item-container'>
         <div
           className='background-image'
           style={{ backgroundImage: `url(${imageUrl})` }}
         />
-        <div className='category-body-container'>
+        <div className='product-item-body-container'>
           <h2>{title}</h2>
           <p>Shop Now</p>
         </div>
@@ -18,4 +18,4 @@ function index({ category }) {
   )
 }
 
-export default index
+export default ProductItem
