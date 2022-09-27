@@ -1,5 +1,3 @@
-import "./contact.styles.scss"
-
 function Contact() {
   return (
     <div>

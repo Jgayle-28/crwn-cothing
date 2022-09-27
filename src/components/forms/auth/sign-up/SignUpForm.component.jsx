@@ -4,7 +4,7 @@ import {
   createUserDocumentFromAuth,
 } from "utils/firebase/firebase.utils"
 import { Button, FormInput } from "components/theme"
-import "../auth-form.styles.scss"
+import { AuthContainer } from "../auth-form.styles"
 
 const defaultFormData = {
   displayName: "",
@@ -41,7 +41,7 @@ function SignUpForm() {
   }
 
   return (
-    <div className='sign-up-container'>
+    <AuthContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -82,10 +82,7 @@ function SignUpForm() {
         />
         <Button type='submit'>Sign Up</Button>
       </form>
-      {/* <Button buttonType='google' onClick={handleLogInWIthGoogle}>
-        Sign up with Google
-      </Button> */}
-    </div>
+    </AuthContainer>
   )
 }
 
