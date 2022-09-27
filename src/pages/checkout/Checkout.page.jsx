@@ -26,7 +26,7 @@ function CheckoutPage() {
       </CheckoutHeader>
 
       {cartItems?.map((cartItem) => (
-        <CheckoutItem cartItem={cartItem} />
+        <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <span className='total'>Total: ${cartTotal}</span>
     </CheckoutContainer>
