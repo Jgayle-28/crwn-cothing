@@ -1,11 +1,18 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useEffect, useReducer } from "react"
 import {
   addCartItem,
   removeCartItem,
   deleteCartItem,
 } from "utils/shop/shop.utils"
 import { getCategoriesAndDocuments } from "utils/firebase/firebase.utils"
+import {
+  TOGGLE_CART_MENU,
+  SET_PRODUCTS,
+  SET_CART_ITEMS,
+  SET_CART_COUNT,
+} from "./shop.types"
 
+// Context
 export const ShopContext = createContext({
   products: {},
   cartMenuOpen: false,
@@ -19,36 +26,81 @@ export const ShopContext = createContext({
   setCartMenuOpen: () => {},
 })
 
+// Reducer
+const INITIAL_STATE = {
+  products: {},
+  cartMenuOpen: false,
+  cartItems: [],
+  cartCount: 0,
+  cartTotal: 0,
+}
+
+const cartReducer = (state, action) => {
+  const { type, payload } = action
+  switch (type) {
+    case SET_PRODUCTS:
+      return {
+        ...state,
+        products: payload,
+      }
+    case TOGGLE_CART_MENU:
+      return {
+        ...state,
+        cartMenuOpen: !state.cartMenuOpen,
+      }
+    case SET_CART_ITEMS:
+      return {
+        ...state,
+        ...payload,
+      }
+    case SET_CART_COUNT:
+      return {
+        ...state,
+        cartCount: payload,
+      }
+
+    default:
+      throw new Error(`Unhandled type ${type} in cartReducer`)
+  }
+}
+
+// Provider
 export const ShopProvider = ({ children }) => {
-  const [products, setProducts] = useState({})
-  const [cartMenuOpen, setCartMenuOpen] = useState(false)
-  const [cartItems, setCartItems] = useState([])
-  const [cartCount, setCartCount] = useState(0)
-  const [cartTotal, setCartTotal] = useState(0)
+  const [
+    { products, cartMenuOpen, cartItems, cartCount, cartTotal },
+    dispatch,
+  ] = useReducer(cartReducer, INITIAL_STATE)
+
+  const setProducts = () => {}
+
+  const setCartMenuOpen = () => {
+    dispatch({ type: TOGGLE_CART_MENU })
+  }
+
+  const setCartItems = (items) => {
+    dispatch({
+      type: SET_CART_ITEMS,
+      payload: {
+        cartItems: items,
+        cartCount: items.reduce(
+          (total, cartIem) => total + cartIem.quantity,
+          0
+        ),
+        cartTotal: items.reduce(
+          (total, cartIem) => total + cartIem.quantity * cartIem.price,
+          0
+        ),
+      },
+    })
+  }
 
   useEffect(() => {
     const getCategories = async () => {
       const categories = await getCategoriesAndDocuments()
-      setProducts(categories)
+      dispatch({ type: SET_PRODUCTS, payload: categories })
     }
     getCategories()
   }, [])
-
-  useEffect(() => {
-    const newCartItems = cartItems.reduce(
-      (total, cartIem) => total + cartIem.quantity,
-      0
-    )
-    setCartCount(newCartItems)
-  }, [cartItems])
-
-  useEffect(() => {
-    const newCartTotal = cartItems.reduce(
-      (total, cartIem) => total + cartIem.quantity * cartIem.price,
-      0
-    )
-    setCartTotal(newCartTotal)
-  }, [cartItems])
 
   const addItemToCart = (product) => {
     const newCartItems = addCartItem(cartItems, product)
