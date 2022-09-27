@@ -3,38 +3,37 @@ import { Link, Outlet } from "react-router-dom"
 import { ReactComponent as CrownLogo } from "assets/crown.svg"
 import { AuthContext } from "context/auth/Auth.context"
 import { signOutUser } from "utils/firebase/firebase.utils"
-import "./nav-bar.styles.scss"
 import CartDropdown from "components/shop/cart-dropdown/CartDropdown.component"
+import {
+  LogoContainer,
+  NavigationContainer,
+  NavLink,
+  NavLinksContainer,
+} from "./nav-bar.styles.jsx"
 
 function NavBar() {
   const { currentUser } = useContext(AuthContext)
 
   return (
     <>
-      <nav className='navigation'>
-        <Link to='/' className='logo-container'>
+      <NavigationContainer>
+        <LogoContainer to='/'>
           <CrownLogo className='logo' />
-        </Link>
+        </LogoContainer>
 
-        <div className='nav-links-container'>
-          <Link to='/shop' className='nav-link'>
-            SHOP
-          </Link>
-          <Link to='/contact' className='nav-link'>
-            CONTACT
-          </Link>
+        <NavLinksContainer>
+          <NavLink to='/shop'>SHOP</NavLink>
+          <NavLink to='/contact'>CONTACT</NavLink>
           {currentUser ? (
-            <span onClick={signOutUser} className='nav-link'>
+            <NavLink as='span' onClick={signOutUser}>
               SIGN OUT
-            </span>
+            </NavLink>
           ) : (
-            <Link to='/sign-in' className='nav-link'>
-              SIGN IN
-            </Link>
+            <NavLink to='/sign-in'>SIGN IN</NavLink>
           )}
           <CartDropdown />
-        </div>
-      </nav>
+        </NavLinksContainer>
+      </NavigationContainer>
       <Outlet />
     </>
   )

@@ -4,7 +4,8 @@ import {
   signInAuthUserWithEmailAndPassword,
 } from "utils/firebase/firebase.utils"
 import { Button, FormInput } from "components/theme"
-import "../auth-form.styles.scss"
+import { BUTTON_TYPE_CLASSES } from "components/theme/button/Button.component"
+import { AuthContainer } from "../auth-form.styles"
 
 const defaultFormData = {
   email: "",
@@ -36,7 +37,7 @@ function SignInForm() {
   }
 
   return (
-    <div className='sign-up-container'>
+    <AuthContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -61,14 +62,14 @@ function SignInForm() {
           <Button type='submit'>Sign In</Button>
           <Button
             type='button'
-            buttonType='google'
+            buttonType={BUTTON_TYPE_CLASSES.google}
             onClick={handleSignWIthGoogle}
           >
             Google Sign In
           </Button>
         </div>
       </form>
-    </div>
+    </AuthContainer>
   )
 }
 
