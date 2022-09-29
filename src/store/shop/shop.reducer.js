@@ -9,7 +9,6 @@ const INITIAL_STATE = {
 }
 
 export const shopReducer = (state = INITIAL_STATE, action) => {
-  console.log(`I am in the reducer`)
   const { type, payload } = action
   switch (type) {
     case SET_PRODUCTS:
