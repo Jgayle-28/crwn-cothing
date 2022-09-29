@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
-// Providers
-import { AuthProvider } from "./context/auth/Auth.context"
-import { ShopProvider } from "./context/shop/Shop.context"
+import { Provider } from "react-redux"
+import { store, persistor } from "store/store"
+import { PersistGate } from "redux-persist/integration/react"
 // styles
 import "./index.scss"
 
@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <ShopProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <App />
-        </ShopProvider>
-      </AuthProvider>
+        </PersistGate>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 )

@@ -1,6 +1,13 @@
+import { useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { Routes, Route } from "react-router-dom"
+import {
+  onAuthStateChangedListener,
+  createUserDocumentFromAuth,
+} from "utils/firebase/firebase.utils"
+import { setCurrentUser } from "store/auth/auth.actions"
+// Components
 import NavBar from "./components/layout/nav-bar/NavBar.component"
-
 // Pages
 import Home from "./pages/home/Home.page"
 import Shop from "./pages/shop/Shop.page"
@@ -9,6 +16,18 @@ import Auth from "./pages/auth/Auth.page"
 import Checkout from "pages/checkout/Checkout.page"
 
 function App() {
+  const dispatch = useDispatch()
+  // onAuthStateChanged from firebase allows us to only update when the 'auth' singleton has changed thus preventing unnecessary re renders
+  // Which in return enhances performance and centralizes authentication actions "REGISTER & SIGN IN"
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener((user) => {
+      // If a user is coming back "NOT SIGNING OUT"
+      if (user) createUserDocumentFromAuth(user)
+      dispatch(setCurrentUser(user))
+    })
+    return unsubscribe
+  }, [])
+
   return (
     <>
       <Routes>
