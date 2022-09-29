@@ -5,21 +5,8 @@ import {
 } from "redux"
 import { persistStore, persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
-// import logger from "redux-logger"
+import { logger } from "./middleware/logger"
 import { rootReducer } from "./root.reducer"
-
-const loggerMiddleWare = (store) => (next) => (action) => {
-  if (!action.type) {
-    return next(action)
-  }
-  console.log("TYPE :>>", action.type)
-  console.log("PAYLOAD :>>", action.payload)
-  console.log("currentState :>> ", store.getState())
-
-  next(action)
-
-  console.log("nextState :>> ", store.getState())
-}
 
 const persistConfig = {
   key: "root",
@@ -30,7 +17,9 @@ const persistConfig = {
 // This is now the store that get stored in local storage and passed to create store
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-const middleWares = [loggerMiddleWare]
+const middleWares = [process.env.NODE_ENV !== "production" && logger].filter(
+  Boolean
+)
 
 const composedEnhancers = compose(applyMiddleware(...middleWares))
 
