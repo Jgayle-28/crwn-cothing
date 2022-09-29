@@ -1,7 +1,6 @@
-import { useContext, useRef } from "react"
+import { useRef } from "react"
 import { ReactComponent as BagIcon } from "assets/shopping-bag.svg"
 // import { useClickAway } from "hooks/useClickAway"
-import { ShopContext } from "context/shop/Shop.context"
 import { Button } from "components/theme"
 import CartDropdownItem from "../cart-dropdown-item/CartDropdownItem"
 import "./cart-dropdown.styles.jsx"
@@ -13,18 +12,25 @@ import {
   CartDropdownItems,
 } from "./cart-dropdown.styles.jsx"
 import { CartIconContainer } from "./cart-icon.styles.jsx"
+import { useSelector, useDispatch } from "react-redux"
+import { setCartMenuOpen } from "store/shop/shop.actions"
+import { selectCarCount, selectCartItems } from "store/shop/shop.selector"
 
 function CartDropdown() {
-  const { cartItems, cartCount, cartMenuOpen, setCartMenuOpen } =
-    useContext(ShopContext)
+  const cartItems = useSelector(selectCartItems)
+  const cartCount = useSelector(selectCarCount)
+  const { cartMenuOpen } = useSelector((state) => state.shop)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const cartDropdownRef = useRef()
   // useClickAway(cartDropdownRef, () => setCartMenuOpen(!cartMenuOpen))
 
+  const handleToggleMenu = () => dispatch(setCartMenuOpen())
+
   const goToCheckout = () => {
     navigate("/checkout")
-    setCartMenuOpen(false)
+    handleToggleMenu()
   }
 
   return (
@@ -32,7 +38,7 @@ function CartDropdown() {
       <CartIconContainer
         ref={cartDropdownRef}
         className='cart-icon-container'
-        onClick={() => setCartMenuOpen(!cartMenuOpen)}
+        onClick={handleToggleMenu}
       >
         <BagIcon className='shopping-icon' />
         <span className='item-count'>{cartCount}</span>

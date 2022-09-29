@@ -3,9 +3,8 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter } from "react-router-dom"
-// Providers
-import { AuthProvider } from "./context/auth/Auth.context"
-import { ShopProvider } from "./context/shop/Shop.context"
+import { Provider } from "react-redux"
+import { store } from "store/store"
 // styles
 import "./index.scss"
 
@@ -13,11 +12,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <ShopProvider>
-          <App />
-        </ShopProvider>
-      </AuthProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 )

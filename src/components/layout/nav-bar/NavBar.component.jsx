@@ -1,7 +1,6 @@
-import { useContext } from "react"
 import { Outlet } from "react-router-dom"
 import { ReactComponent as CrownLogo } from "assets/crown.svg"
-import { AuthContext } from "context/auth/Auth.context"
+import { useSelector } from "react-redux"
 import { signOutUser } from "utils/firebase/firebase.utils"
 import CartDropdown from "components/shop/cart-dropdown/CartDropdown.component"
 import {
@@ -12,7 +11,7 @@ import {
 } from "./nav-bar.styles.jsx"
 
 function NavBar() {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser } = useSelector((state) => state.auth)
 
   return (
     <>
