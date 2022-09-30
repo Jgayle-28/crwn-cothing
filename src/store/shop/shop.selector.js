@@ -1,15 +1,15 @@
 import { createSelector } from "reselect"
 
-const selectProductsReducer = (state) => state.shop
+const selectShopReducer = (state) => state.shop
 
 export const selectProducts = createSelector(
-  [selectProductsReducer],
-  (productsSlice) => productsSlice.products
+  [selectShopReducer],
+  (shopSlice) => shopSlice.products
 )
 
 export const selectCartItems = createSelector(
-  [selectProductsReducer],
-  (productsSlice) => productsSlice.cartItems
+  [selectShopReducer],
+  (shopSlice) => shopSlice.cartItems
 )
 
 export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
@@ -29,4 +29,9 @@ export const selectProductsMap = createSelector([selectProducts], (products) =>
     acc[title.toLowerCase()] = items
     return acc
   }, {})
+)
+
+export const selectProductsIsLoading = createSelector(
+  [selectShopReducer],
+  (shopSlice) => shopSlice.isLoading
 )
