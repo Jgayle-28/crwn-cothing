@@ -1,4 +1,10 @@
-import { TOGGLE_CART_MENU, SET_PRODUCTS, SET_CART_ITEMS } from "./shop.types"
+import {
+  TOGGLE_CART_MENU,
+  SET_CART_ITEMS,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_FAILED,
+  FETCH_PRODUCTS_SUCCESS,
+} from "./shop.types"
 
 const INITIAL_STATE = {
   products: [],
@@ -6,15 +12,29 @@ const INITIAL_STATE = {
   cartItems: [],
   cartCount: 0,
   cartTotal: 0,
+  isLoading: false,
+  error: null,
 }
 
 export const shopReducer = (state = INITIAL_STATE, action) => {
   const { type, payload } = action
   switch (type) {
-    case SET_PRODUCTS:
+    case FETCH_PRODUCTS_START:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case FETCH_PRODUCTS_SUCCESS:
       return {
         ...state,
         products: payload,
+        isLoading: false,
+      }
+    case FETCH_PRODUCTS_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
       }
     case TOGGLE_CART_MENU:
       return {

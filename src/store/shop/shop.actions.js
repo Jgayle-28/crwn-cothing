@@ -1,16 +1,29 @@
-import { TOGGLE_CART_MENU, SET_PRODUCTS, SET_CART_ITEMS } from "./shop.types"
+import {
+  TOGGLE_CART_MENU,
+  SET_CART_ITEMS,
+  FETCH_PRODUCTS_START,
+  FETCH_PRODUCTS_SUCCESS,
+  FETCH_PRODUCTS_FAILED,
+} from "./shop.types"
 import {
   addCartItem,
   removeCartItem,
   deleteCartItem,
 } from "utils/shop/shop.utils"
+import { getCategoriesAndDocuments } from "utils/firebase/firebase.utils"
 
 export const setCartMenuOpen = () => {
   return { type: TOGGLE_CART_MENU }
 }
 
-export const setProducts = (products) => {
-  return { type: SET_PRODUCTS, payload: products }
+export const fetchProductsAsync = () => async (dispatch) => {
+  dispatch({ type: FETCH_PRODUCTS_START })
+  try {
+    const categoriesArray = await getCategoriesAndDocuments()
+    dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: categoriesArray })
+  } catch (error) {
+    dispatch({ type: FETCH_PRODUCTS_FAILED, payload: error })
+  }
 }
 
 export const addItemToCart = (cartItems, product) => {

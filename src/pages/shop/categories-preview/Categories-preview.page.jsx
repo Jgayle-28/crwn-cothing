@@ -1,9 +1,16 @@
 import { useSelector } from "react-redux"
-import { selectProducts } from "store/shop/shop.selector"
+import {
+  selectProducts,
+  selectProductsIsLoading,
+} from "store/shop/shop.selector"
 import CategoryPreview from "components/shop/category-preview/CategoryPreview.component"
+import Spinner from "components/theme/spinner/Spinner.component"
 
 function CategoriesPreview() {
   const products = useSelector(selectProducts)
+  const isLoading = useSelector(selectProductsIsLoading)
+
+  if (isLoading) return <Spinner />
   return (
     <>
       {products.map((category) => {
