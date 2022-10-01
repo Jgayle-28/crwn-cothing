@@ -6,6 +6,8 @@ import {
 import { Button, FormInput } from "components/theme"
 import { BUTTON_TYPE_CLASSES } from "components/theme/button/Button.component"
 import { AuthContainer } from "../auth-form.styles"
+import { useDispatch } from "react-redux"
+import { googleSignInStart } from "store/auth/auth.actions"
 
 const defaultFormData = {
   email: "",
@@ -15,6 +17,8 @@ const defaultFormData = {
 function SignInForm() {
   const [formData, setFormData] = useState(defaultFormData)
   const { email, password } = formData
+
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -33,7 +37,7 @@ function SignInForm() {
   }
 
   const handleSignWIthGoogle = async () => {
-    signInWithGooglePopup()
+    dispatch(googleSignInStart())
   }
 
   return (

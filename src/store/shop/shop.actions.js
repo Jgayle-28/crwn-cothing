@@ -16,14 +16,8 @@ export const setCartMenuOpen = () => {
   return { type: TOGGLE_CART_MENU }
 }
 
-export const fetchProductsAsync = () => async (dispatch) => {
-  dispatch({ type: FETCH_PRODUCTS_START })
-  try {
-    const categoriesArray = await getCategoriesAndDocuments()
-    dispatch({ type: FETCH_PRODUCTS_SUCCESS, payload: categoriesArray })
-  } catch (error) {
-    dispatch({ type: FETCH_PRODUCTS_FAILED, payload: error })
-  }
+export const fetchProductsStart = () => {
+  return { type: FETCH_PRODUCTS_START }
 }
 
 export const addItemToCart = (cartItems, product) => {
