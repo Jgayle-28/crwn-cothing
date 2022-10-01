@@ -5,6 +5,8 @@ import {
 } from "utils/firebase/firebase.utils"
 import { Button, FormInput } from "components/theme"
 import { AuthContainer } from "../auth-form.styles"
+import { useDispatch } from "react-redux"
+import { signUpStart } from "store/auth/auth.actions"
 
 const defaultFormData = {
   displayName: "",
@@ -16,6 +18,7 @@ const defaultFormData = {
 function SignUpForm() {
   const [formData, setFormData] = useState(defaultFormData)
   const { displayName, email, password, confirmPassword } = formData
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     setFormData((prevState) => ({
@@ -27,14 +30,10 @@ function SignUpForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password !== confirmPassword) return alert(`Passwords do not match`)
+
     try {
-      const res = await createAuthUserWithEmailAndPassword(email, password)
-      if (res) {
-        // Add the users display name since it is not coming from Google
-        res.user.displayName = displayName
-        await createUserDocumentFromAuth(res.user)
-        setFormData(defaultFormData)
-      }
+      dispatch(signUpStart(email, password, displayName))
+      setFormData(defaultFormData)
     } catch (error) {
       console.log("error", error)
     }
